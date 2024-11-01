@@ -8,8 +8,7 @@ import com.example.demo.entity.impl.FieldEntity;
 import com.example.demo.exception.DataPersistException;
 import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.FieldService;
-import com.example.demo.util.AppUtil;
-import com.example.demo.util.Mapping;
+import com.example.demo.util.Mappingg;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,7 +26,7 @@ public class FieldServiceIMPL implements FieldService {
     public FieldDAO fieldDAO;
 
     @Autowired
-    public Mapping mapping;
+    public Mappingg mapping;
 
     @Override
     public void saveField(FieldDTO fieldDTO) {
