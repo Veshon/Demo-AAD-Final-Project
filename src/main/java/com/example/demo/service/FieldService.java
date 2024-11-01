@@ -8,6 +8,6 @@ import java.util.List;
 public interface FieldService {
     void saveField(FieldDTO fieldDTO);
     List<FieldDTO> getAllFields();
-
-    FieldStatus getUser(String fieldCode);
+    FieldStatus getField(String fieldCode);
+    void deleteField(String fieldCode);
 }

@@ -6,6 +6,7 @@ import com.example.demo.dto.FieldStatus;
 import com.example.demo.dto.impl.FieldDTO;
 import com.example.demo.entity.impl.FieldEntity;
 import com.example.demo.exception.DataPersistException;
+import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.FieldService;
 import com.example.demo.util.AppUtil;
 import com.example.demo.util.Mapping;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -42,12 +44,23 @@ public class FieldServiceIMPL implements FieldService {
     }
 
     @Override
-    public FieldStatus getUser(String fieldCode) {
+    public FieldStatus getField(String fieldCode) {
 
         if (fieldDAO.existsById(fieldCode)){
             FieldEntity selectedField = fieldDAO.getReferenceById(fieldCode);
             return mapping.toFieldDTO(selectedField);
         }
         return new SelectedErrorStatus(2, "Field with code " + fieldCode + " not found");
+    }
+
+    @Override
+    public void deleteField(String fieldCode) {
+        Optional<FieldEntity> existedField = fieldDAO.findById(fieldCode);
+
+        if (!existedField.isPresent()){
+            throw new FieldNotFoundException("Field code" + fieldCode + "Not found");
+        }else {
+            fieldDAO.deleteById(fieldCode);
+        }
     }
 }

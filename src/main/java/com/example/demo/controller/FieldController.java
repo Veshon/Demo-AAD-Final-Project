@@ -4,6 +4,7 @@ import com.example.demo.customStatusCode.SelectedFieldErrorStatus;
 import com.example.demo.dto.FieldStatus;
 import com.example.demo.dto.impl.FieldDTO;
 import com.example.demo.exception.DataPersistException;
+import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.FieldService;
 import com.example.demo.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,11 +71,37 @@ public class FieldController {
         if (!regexMatcher.matches()){
             return new SelectedFieldErrorStatus(1,"Field code is not valid");
         }
-        return fieldService.getUser(fieldCode);
+        return fieldService.getField(fieldCode);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FieldDTO> getAllFields(){
         return fieldService.getAllFields();
+    }
+
+    @DeleteMapping(value = "/{fieldCode}")
+    public ResponseEntity<Void> deleteField(@PathVariable("fieldCode") String fieldCode){
+
+        String regexForUserId = "^FIELD-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserId);
+        var regexMatcher = regexPattern.matcher(fieldCode);
+
+        try {
+
+            if (!regexMatcher.matches()){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            fieldService.deleteField(fieldCode);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 }
