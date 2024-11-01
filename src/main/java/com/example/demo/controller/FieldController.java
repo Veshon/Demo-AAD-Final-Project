@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import com.example.demo.customStatusCode.SelectedFieldErrorStatus;
+import com.example.demo.dto.FieldStatus;
 import com.example.demo.dto.impl.FieldDTO;
 import com.example.demo.exception.DataPersistException;
 import com.example.demo.service.FieldService;
@@ -10,6 +12,9 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/fields")
@@ -53,5 +58,23 @@ public class FieldController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
+    }
+
+    @GetMapping(value = "/{fieldCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FieldStatus getSelectedField(@PathVariable ("fieldCode") String fieldCode){
+
+        String regexForUserId = "^FIELD-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserId);
+        var regexMatcher = regexPattern.matcher(fieldCode);
+
+        if (!regexMatcher.matches()){
+            return new SelectedFieldErrorStatus(1,"Field code is not valid");
+        }
+        return fieldService.getUser(fieldCode);
+    }
+
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    public List<FieldDTO> getAllFields(){
+        return fieldService.getAllFields();
     }
 }
