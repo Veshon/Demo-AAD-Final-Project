@@ -68,4 +68,26 @@ public class StaffServiceIMPL implements StaffService {
             staffDAO.deleteById(id);
         }
     }
+
+    @Override
+    public void updateStaff(String id, StaffDTO staffDTO) {
+        Optional<StaffEntity> tmpStaff = staffDAO.findById(id); // optional cuz to reduce null point exception
+        if (tmpStaff.isPresent()){
+            tmpStaff.get().setFirstName(staffDTO.getFirstName());
+            tmpStaff.get().setLastName(staffDTO.getLastName());
+            tmpStaff.get().setDesignation(staffDTO.getDesignation());
+            tmpStaff.get().setGender(staffDTO.getGender());
+            tmpStaff.get().setJoinedDate(staffDTO.getJoinedDate());
+            tmpStaff.get().setDob(staffDTO.getDob());
+            tmpStaff.get().setAddressLine01(staffDTO.getAddressLine01());
+            tmpStaff.get().setAddressLine02(staffDTO.getAddressLine02());
+            tmpStaff.get().setAddressLine03(staffDTO.getAddressLine03());
+            tmpStaff.get().setAddressLine04(staffDTO.getAddressLine04());
+            tmpStaff.get().setAddressLine05(staffDTO.getAddressLine05());
+            tmpStaff.get().setContactNo(staffDTO.getContactNo());
+            tmpStaff.get().setEmail(staffDTO.getEmail());
+            tmpStaff.get().setRole(staffDTO.getRole());
+            tmpStaff.get().setRole(staffDTO.getRole());
+        }
+    }
 }
