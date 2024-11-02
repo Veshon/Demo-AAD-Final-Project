@@ -45,16 +45,16 @@ public class Mapping {
         return modelMapper.map(cropEntities, new TypeToken<List<CropDTO>>() {}.getType());
     }
 
-    public StaffDTO toStaffDTO(StaffEntity staffEntity) {
-        return modelMapper.map(staffEntity, StaffDTO.class);
+    public StaffsDTO toStaffDTO(StaffEntity staffEntity) {
+        return modelMapper.map(staffEntity, StaffsDTO.class);
     }
 
-    public StaffEntity toStaffEntity(StaffDTO staffDTO) {
+    public StaffEntity toStaffEntity(StaffsDTO staffDTO) {
         return modelMapper.map(staffDTO, StaffEntity.class);
     }
 
-    public List<StaffDTO> asStaffDTOList(List<StaffEntity> staffEntities) {
-        return modelMapper.map(staffEntities, new TypeToken<List<StaffDTO>>() {}.getType());
+    public List<StaffsDTO> asStaffDTOList(List<StaffEntity> staffEntities) {
+        return modelMapper.map(staffEntities, new TypeToken<List<StaffsDTO>>() {}.getType());
     }
 
     public VehicleDTO toVehicleDTO(VehicleEntity vehicleEntity) {

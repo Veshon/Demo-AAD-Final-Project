@@ -26,7 +26,7 @@ public class VehicleEntity implements SuperEntity {
     private String status;
     private String remarks;
 
-    @OneToMany(mappedBy = "vehicleId")
+    @OneToMany(mappedBy = "vehicle")
     private List<StaffEntity> vehicleIds;
 
 }

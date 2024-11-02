@@ -1,7 +1,5 @@
 package com.example.demo.entity.impl;
 
-import com.example.demo.entity.Desig;
-import com.example.demo.entity.Gender;
 import com.example.demo.entity.Role;
 import com.example.demo.entity.SuperEntity;
 import jakarta.persistence.*;
@@ -23,11 +21,10 @@ public class StaffEntity implements SuperEntity {
     private String firstName;
     private String lastName;
 
-    @Enumerated(EnumType.STRING)
-    private Desig designation;
+//    @Enumerated(EnumType.STRING)
+    private String designation;
 
-    @Enumerated(EnumType.STRING)
-    private Gender gender;
+    private String gender;
     private String joinedDate;
     private String dob;
 
@@ -44,11 +41,11 @@ public class StaffEntity implements SuperEntity {
 
     @ManyToOne
     @JoinColumn(name = "fieldCode", nullable = false)
-    private FieldEntity fieldId;
+    private FieldEntity field;
 
     @ManyToOne
     @JoinColumn(name = "vehicleCode", nullable = false)
-    private VehicleEntity vehicleId;
+    private VehicleEntity vehicle;
 
     @OneToMany(mappedBy = "staffId")
     private List<LogsEntity> staffId;

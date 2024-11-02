@@ -1,4 +1,3 @@
-/*
 package com.example.demo.dto.impl;
 
 import com.example.demo.dto.StaffStatus;
@@ -11,7 +10,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 
-public class StaffDTO implements StaffStatus {
+public class StaffsDTO implements StaffStatus {
 
     private String id;
     private String firstName;
@@ -30,6 +29,4 @@ public class StaffDTO implements StaffStatus {
     private Role role;
     private String fieldCode;
     private String vehicleCode;
-
 }
-*/
