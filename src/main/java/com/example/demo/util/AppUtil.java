@@ -12,6 +12,10 @@ public class AppUtil {
     public static String generateCropCode(){
         return "CROP-" + UUID.randomUUID();
     }
+
+    public static String generateVehicleCode(){
+        return "VEHICLE-" + UUID.randomUUID();
+    }
     public static String generateStaffId(){
         return "STAFF-" + UUID.randomUUID();
     }

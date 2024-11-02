@@ -33,7 +33,6 @@ public class FieldServiceIMPL implements FieldService {
 
     @Override
     public void saveField(FieldDTO fieldDTO) {
-//        fieldDTO.setFieldCode(AppUtil.generateFieldCode());
 
         FieldEntity savedField =
                 fieldDAO.save(mapping.toFieldEntity(fieldDTO));
