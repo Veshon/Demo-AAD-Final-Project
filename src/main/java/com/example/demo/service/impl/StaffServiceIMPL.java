@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.customStatusCode.SelectedErrorStatus;
 import com.example.demo.dao.FieldDAO;
 import com.example.demo.dao.StaffDAO;
+import com.example.demo.dto.StaffStatus;
 import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.StaffDTO;
 import com.example.demo.entity.impl.CropEntity;
@@ -43,5 +45,14 @@ public class StaffServiceIMPL implements StaffService {
     public List<StaffDTO> getAllStaff() {
         List<StaffEntity> allStaff = staffDAO.findAll();
         return mapping.asStaffDTOList(allStaff);
+    }
+
+    @Override
+    public StaffStatus getStaff(String id) {
+        if (staffDAO.existsById(id)){
+            StaffEntity selectedStaff = staffDAO.getReferenceById(id);
+            return mapping.toStaffDTO(selectedStaff);
+        }
+        return (StaffStatus) new SelectedErrorStatus(2, "Staff with code " + id + " not found");
     }
 }
