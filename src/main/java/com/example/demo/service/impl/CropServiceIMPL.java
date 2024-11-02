@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.customStatusCode.SelectedErrorStatus;
 import com.example.demo.dao.CropDAO;
+import com.example.demo.dto.CropStatus;
 import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.FieldDTO;
 import com.example.demo.entity.impl.CropEntity;
@@ -41,5 +43,14 @@ public class CropServiceIMPL implements CropService {
     public List<CropDTO> getAllCrops() {
         List<CropEntity> allCrops = cropDAO.findAll();
         return mapping.asCropDTOList(allCrops);
+    }
+
+    @Override
+    public CropStatus getCrop(String code) {
+        if (cropDAO.existsById(code)){
+            CropEntity selectedCrop = cropDAO.getReferenceById(code);
+            return mapping.toCropDTO(selectedCrop);
+        }
+        return new SelectedErrorStatus(2, "Crop with code " + code + " not found");
     }
 }
