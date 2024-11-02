@@ -1,4 +1,3 @@
-/*
 package com.example.demo.dto.impl;
 
 import com.example.demo.dto.StaffStatus;
@@ -32,4 +31,3 @@ public class StaffDTO implements StaffStatus {
     private String vehicleCode;
 
 }
-*/
