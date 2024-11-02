@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.customStatusCode.SelectedErrorStatus;
 import com.example.demo.dao.EquipmentDAO;
 import com.example.demo.dao.FieldDAO;
+import com.example.demo.dto.EquipmentStatus;
 import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.EquipmentDTO;
 import com.example.demo.entity.impl.CropEntity;
@@ -42,5 +44,14 @@ public class EquipmentServiceIMPL implements EquipmentService {
     public List<EquipmentDTO> getAllEquipments() {
         List<EquipmentEntity> allEquipments = equipmentDAO.findAll();
         return mapping.asEquipmentDTOList(allEquipments);
+    }
+
+    @Override
+    public EquipmentStatus getEquipment(String id) {
+        if (equipmentDAO.existsById(id)){
+            EquipmentEntity selectedEquipment = equipmentDAO.getReferenceById(id);
+            return mapping.toEquipmentDTO(selectedEquipment);
+        }
+        return (EquipmentStatus) new SelectedErrorStatus(2, "Equipment with id " + id + " not found");
     }
 }
