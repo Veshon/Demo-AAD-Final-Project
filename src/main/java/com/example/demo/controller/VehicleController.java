@@ -82,4 +82,25 @@ public class VehicleController {
 
         }
     }
+
+    @PutMapping(value = "/{vehicleCode}")
+    public ResponseEntity<Void> updateStaff(@PathVariable ("vehicleCode") String code,
+                                            @RequestBody VehicleDTO updatedVehicleDTO){
+        String regexForVehicleCode = "^VEHICLE-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForVehicleCode);
+        var regexMatcher = regexPattern.matcher(code);
+        try {
+            if(!regexMatcher.matches() || updatedVehicleDTO == null){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+            vehicleService.updateVehicle(code,updatedVehicleDTO);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
