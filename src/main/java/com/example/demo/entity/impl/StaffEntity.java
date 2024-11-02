@@ -30,8 +30,8 @@ public class StaffEntity implements SuperEntity {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
-    private Date joinedDate;
-    private Date dob;
+    private String joinedDate;
+    private String dob;
 
     private String addressLine01;
     private String addressLine02;
