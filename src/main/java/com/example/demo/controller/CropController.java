@@ -5,6 +5,7 @@ import com.example.demo.dto.CropStatus;
 import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.FieldDTO;
 import com.example.demo.exception.DataPersistException;
+import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.CropService;
 import com.example.demo.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,21 +25,6 @@ public class CropController {
 
     @Autowired
     private CropService cropService;
-
-/*    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
-            produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> saveNote(@RequestBody CropDTO noteDTO) {
-        try {
-            cropService.saveCrop(noteDTO);
-            return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch (DataPersistException e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
-            e.printStackTrace();
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
-    }*/
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveCrop(
@@ -89,5 +75,31 @@ public class CropController {
             return new SelectedErrorStatus(1,"Crop ID is not ");
         }
         return cropService.getCrop(code);
+    }
+
+    @DeleteMapping(value = "/{code}")
+    public ResponseEntity<Void> deleteCode(@PathVariable("code") String code){
+
+        String regexForUserId = "^CROP-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserId);
+        var regexMatcher = regexPattern.matcher(code);
+
+        try {
+
+            if (!regexMatcher.matches()){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            cropService.deleteCrop(code);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 }
