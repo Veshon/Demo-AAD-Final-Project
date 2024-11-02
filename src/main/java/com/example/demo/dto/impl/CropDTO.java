@@ -11,12 +11,12 @@ import lombok.NoArgsConstructor;
 
 public class CropDTO implements CropStatus {
 
-    private String cropCode;
-    private String CommonName;
-    private String ScientificName;
-    private String cropImage;
+    private String code;
+    private String commonName;
+    private String scientificName;
+    private String cropImg;
     private String category;
-    private String Season;
+    private String season;
     private String fieldCode;
 
 }

@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 @Component
-public class Mappingg {
+public class Mapping {
 
     @Autowired
     private ModelMapper modelMapper;

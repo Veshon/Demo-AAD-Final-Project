@@ -5,6 +5,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -17,5 +19,7 @@ public class FieldDTO implements FieldStatus {
     private Double extentSize;
     private String fieldImage1;
     private String fieldImage2;
+    private List<CropDTO> cropId;
+    private List<StaffDTO> staffId;
 
 }
