@@ -1,4 +1,4 @@
-#Frontend of this project: https://github.com/Veshon/AAD-FINAL-COURSE-WORK-FRONT-END-
+Frontend of this project: https://github.com/Veshon/AAD-FINAL-COURSE-WORK-FRONT-END-
 
 # Green Shadow Crop Monitoring System
 
