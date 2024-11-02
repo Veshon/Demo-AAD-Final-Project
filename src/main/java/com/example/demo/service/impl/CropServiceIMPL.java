@@ -66,4 +66,16 @@ public class CropServiceIMPL implements CropService {
             cropDAO.deleteById(code);
         }
     }
+
+    @Override
+    public void updateCrop(String code, CropDTO cropDTO) {
+        Optional<CropEntity> tmpCrop = cropDAO.findById(code); // optional cuz to reduce null point exception
+        if (tmpCrop.isPresent()){
+            tmpCrop.get().setCommonName(cropDTO.getCommonName());
+            tmpCrop.get().setScientificName(cropDTO.getScientificName());
+            tmpCrop.get().setCategory(cropDTO.getCategory());
+            tmpCrop.get().setScientificName(cropDTO.getScientificName());
+            tmpCrop.get().setCropImg(cropDTO.getCropImg());
+        }
+    }
 }

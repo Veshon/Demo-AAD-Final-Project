@@ -12,5 +12,6 @@ public interface CropService {
     List<CropDTO> getAllCrops();
     CropStatus getCrop(String code);
     void deleteCrop(String code);
+    void updateCrop(String code, CropDTO cropDTO);
 
 }

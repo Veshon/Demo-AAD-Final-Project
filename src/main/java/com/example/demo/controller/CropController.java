@@ -102,4 +102,35 @@ public class CropController {
 
         }
     }
+
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping(value = "/{code}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateCode(
+            @RequestPart("commonName") String commonName,
+            @RequestPart("scientificName") String scientificName,
+            @RequestPart("category") String category,
+            @RequestPart("season") String season,
+            @RequestPart("cropImg") MultipartFile cropImg,
+            @PathVariable ("code") String code
+    ){
+        // profilePic ----> Base64
+        String base64ProPic = "";
+
+        try {
+            byte [] bytesProPic = cropImg.getBytes();
+            base64ProPic = AppUtil.profilePicToBase64(bytesProPic);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //Build the Object
+        CropDTO buildCropDTO = new CropDTO();
+        buildCropDTO.setCode(code);
+        buildCropDTO.setCommonName(commonName);
+        buildCropDTO.setScientificName(scientificName);
+        buildCropDTO.setCategory(category);
+        buildCropDTO.setSeason(season);
+        buildCropDTO.setCropImg(base64ProPic);
+        cropService.updateCrop(code,buildCropDTO);
+    }
 }
