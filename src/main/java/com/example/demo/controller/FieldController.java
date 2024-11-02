@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 public class FieldController {
 
     @Autowired
-    public FieldService fieldService;
+    private FieldService fieldService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveField(

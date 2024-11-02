@@ -16,8 +16,13 @@ public class AppUtil {
     public static String generateVehicleCode(){
         return "VEHICLE-" + UUID.randomUUID();
     }
+
     public static String generateStaffId(){
         return "STAFF-" + UUID.randomUUID();
+    }
+
+    public static String generateEquipmentId(){
+        return "EQUIPMENT-" + UUID.randomUUID();
     }
 
     public static String profilePicToBase64(byte[] profilePic){

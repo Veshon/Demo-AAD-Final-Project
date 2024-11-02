@@ -20,17 +20,18 @@ public class EquipmentEntity implements SuperEntity {
     private String equipmentId;
     private String name;
 
-    @Enumerated(EnumType.STRING)
-    private EquipmentType type;
+//    @Enumerated(EnumType.STRING)
+    private String type;
 
-    @Enumerated(EnumType.STRING)
-    private EquipmentStatus status;
+//    @Enumerated(EnumType.STRING)
+    private String status;
 
     @ManyToOne
     @JoinColumn(name = "fieldCode", nullable = false)
-    private FieldEntity fieldId;
+    private FieldEntity field;
 
     @ManyToOne
     @JoinColumn(name = "staffId", nullable = false)
-    private StaffEntity staffId;
+    private StaffEntity staff;
+
 }

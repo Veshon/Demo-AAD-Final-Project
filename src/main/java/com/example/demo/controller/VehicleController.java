@@ -23,7 +23,7 @@ import java.util.regex.Pattern;
 public class VehicleController {
 
     @Autowired
-    public VehicleService vehicleService;
+    private VehicleService vehicleService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)

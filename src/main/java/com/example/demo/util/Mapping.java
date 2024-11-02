@@ -2,10 +2,7 @@ package com.example.demo.util;
 
 import com.example.demo.dto.impl.*;
 import com.example.demo.dto.impl.FieldDTO;
-import com.example.demo.entity.impl.CropEntity;
-import com.example.demo.entity.impl.FieldEntity;
-import com.example.demo.entity.impl.StaffEntity;
-import com.example.demo.entity.impl.VehicleEntity;
+import com.example.demo.entity.impl.*;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,5 +64,17 @@ public class Mapping {
 
     public List<VehicleDTO> asVehicleDTOList(List<VehicleEntity> vehicleEntities) {
         return modelMapper.map(vehicleEntities, new TypeToken<List<VehicleDTO>>() {}.getType());
+    }
+
+    public EquipmentDTO toEquipmentDTO(EquipmentEntity equipmentEntity) {
+        return modelMapper.map(equipmentEntity, EquipmentDTO.class);
+    }
+
+    public EquipmentEntity toEquipmentEntity(EquipmentDTO equipmentDTO) {
+        return modelMapper.map(equipmentDTO, EquipmentEntity.class);
+    }
+
+    public List<EquipmentDTO> asEquipmentDTOList(List<EquipmentEntity> equipmentEntities) {
+        return modelMapper.map(equipmentEntities, new TypeToken<List<EquipmentDTO>>() {}.getType());
     }
 }

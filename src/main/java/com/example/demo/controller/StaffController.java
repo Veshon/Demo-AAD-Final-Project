@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 public class StaffController {
 
     @Autowired
-    public StaffService staffService;
+    private StaffService staffService;
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
