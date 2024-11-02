@@ -1,3 +1,4 @@
+/*
 package com.example.demo.dto.impl;
 
 import com.example.demo.dto.FieldStatus;
@@ -19,3 +20,4 @@ public class FieldsDTO implements FieldStatus {
     private String fieldImage2;
 
 }
+*/

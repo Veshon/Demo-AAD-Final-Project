@@ -1,3 +1,4 @@
+/*
 package com.example.demo.controller;
 
 import com.example.demo.dto.impl.FieldsDTO;
@@ -37,3 +38,4 @@ public class FieldsController {
         }
     }
 }
+*/

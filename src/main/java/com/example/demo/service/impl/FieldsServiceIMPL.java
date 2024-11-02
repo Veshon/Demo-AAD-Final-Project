@@ -1,3 +1,4 @@
+/*
 package com.example.demo.service.impl;
 
 import com.example.demo.dao.CropDAO;
@@ -35,3 +36,4 @@ public class FieldsServiceIMPL implements FieldsService {
         }
     }
 }
+*/

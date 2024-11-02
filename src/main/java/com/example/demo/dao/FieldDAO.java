@@ -1,4 +1,3 @@
-/*
 package com.example.demo.dao;
 
 import com.example.demo.entity.impl.FieldEntity;
@@ -10,4 +9,3 @@ import org.springframework.stereotype.Repository;
 public interface FieldDAO extends JpaRepository<FieldEntity, String> {
 }
 
-*/

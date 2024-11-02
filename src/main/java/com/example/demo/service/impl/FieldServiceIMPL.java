@@ -1,4 +1,3 @@
-/*
 package com.example.demo.service.impl;
 
 import com.example.demo.customStatusCode.SelectedErrorStatus;
@@ -10,6 +9,7 @@ import com.example.demo.entity.impl.StaffEntity;
 import com.example.demo.exception.DataPersistException;
 import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.FieldService;
+import com.example.demo.util.AppUtil;
 import com.example.demo.util.Mapping;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +33,8 @@ public class FieldServiceIMPL implements FieldService {
 
     @Override
     public void saveField(FieldDTO fieldDTO) {
+//        fieldDTO.setFieldCode(AppUtil.generateFieldCode());
+
         FieldEntity savedField =
                 fieldDAO.save(mapping.toFieldEntity(fieldDTO));
         if (savedField == null) {
@@ -79,4 +81,3 @@ public class FieldServiceIMPL implements FieldService {
         }
     }
 }
-*/

@@ -1,4 +1,3 @@
-/*
 package com.example.demo.service;
 
 import com.example.demo.dto.FieldStatus;
@@ -15,4 +14,3 @@ public interface FieldService {
     void updateField(String fieldCode, FieldDTO userDTO);
 
 }
-*/

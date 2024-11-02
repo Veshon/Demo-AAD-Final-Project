@@ -1,4 +1,3 @@
-/*
 package com.example.demo.dto.impl;
 
 import com.example.demo.dto.FieldStatus;
@@ -20,8 +19,5 @@ public class FieldDTO implements FieldStatus {
     private Double extentSize;
     private String fieldImage1;
     private String fieldImage2;
-    private List<CropDTO> cropId;
-    private List<StaffDTO> staffId;
 
 }
-*/
