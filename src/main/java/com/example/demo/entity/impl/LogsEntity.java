@@ -1,7 +1,5 @@
 package com.example.demo.entity.impl;
 
-import com.example.demo.entity.EquipmentStatus;
-import com.example.demo.entity.EquipmentType;
 import com.example.demo.entity.SuperEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,23 +10,25 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "Equipment")
+@Table(name = "Logs")
 
-public class EquipmentEntity implements SuperEntity {
+public class LogsEntity implements SuperEntity {
 
     @Id
-    private String equipmentId;
-    private String name;
+    private String logCode;
+    private String logDate;
+    private String logDetails;
 
-    @Enumerated(EnumType.STRING)
-    private EquipmentType type;
-
-    @Enumerated(EnumType.STRING)
-    private EquipmentStatus status;
+    @Column(columnDefinition = "LONGTEXT")
+    private String observedImage;
 
     @ManyToOne
     @JoinColumn(name = "fieldCode", nullable = false)
     private FieldEntity fieldId;
+
+    @ManyToOne
+    @JoinColumn(name = "cropCode", nullable = false)
+    private CropEntity cropCode;
 
     @ManyToOne
     @JoinColumn(name = "staffId", nullable = false)

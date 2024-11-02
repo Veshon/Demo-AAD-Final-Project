@@ -15,7 +15,6 @@ import java.util.List;
 @Table(name = "Field")
 
 public class FieldEntity implements SuperEntity {
-
     @Id
     private String fieldCode;
     private String fieldName;
@@ -29,7 +28,12 @@ public class FieldEntity implements SuperEntity {
     @OneToMany(mappedBy = "field")
     private List<CropEntity> crops;
 
-    @ManyToMany
-    private List<StaffEntity> staff;
+    @OneToMany(mappedBy = "fieldId")
+    private List<StaffEntity> fieldIds;
 
+    @OneToMany(mappedBy = "fieldId")
+    private List<EquipmentEntity> fieldId;
+
+    @OneToMany(mappedBy = "fieldId")
+    private List<LogsEntity> fieldCodes;
 }

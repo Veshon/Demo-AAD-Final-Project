@@ -3,7 +3,7 @@ package com.example.demo.entity.impl;
 import com.example.demo.entity.SuperEntity;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +18,6 @@ import java.util.List;
 @Table(name = "Vehicle")
 
 public class VehicleEntity implements SuperEntity {
-
     @Id
     private String vehicleCode;
     private String licensePlateNumber;
@@ -27,6 +26,7 @@ public class VehicleEntity implements SuperEntity {
     private String status;
     private String remarks;
 
-    @ManyToMany(mappedBy = "vehicles")
-    private List<StaffEntity> assignedStaff;
+    @OneToMany(mappedBy = "vehicleId")
+    private List<StaffEntity> vehicleIds;
+
 }

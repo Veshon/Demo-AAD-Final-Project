@@ -1,4 +1,3 @@
-/*
 package com.example.demo.dto.impl;
 
 import com.example.demo.dto.FieldStatus;
@@ -6,13 +5,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 
-public class FieldDTO implements FieldStatus {
+public class FieldsDTO implements FieldStatus {
 
     private String fieldCode;
     private String fieldName;
@@ -20,8 +17,5 @@ public class FieldDTO implements FieldStatus {
     private Double extentSize;
     private String fieldImage1;
     private String fieldImage2;
-    private List<CropDTO> cropId;
-    private List<StaffDTO> staffId;
 
 }
-*/

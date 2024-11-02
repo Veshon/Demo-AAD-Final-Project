@@ -7,7 +7,7 @@ import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.StaffDTO;
 import com.example.demo.exception.DataPersistException;
 import com.example.demo.exception.FieldNotFoundException;
-import com.example.demo.service.FieldService;
+import com.example.demo.service.FieldsService;
 import com.example.demo.service.StaffService;
 import com.example.demo.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;

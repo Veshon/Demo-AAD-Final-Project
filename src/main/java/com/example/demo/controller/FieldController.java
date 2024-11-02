@@ -1,7 +1,9 @@
+/*
 package com.example.demo.controller;
 
 import com.example.demo.customStatusCode.SelectedFieldErrorStatus;
 import com.example.demo.dto.FieldStatus;
+import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.FieldDTO;
 import com.example.demo.exception.DataPersistException;
 import com.example.demo.exception.FieldNotFoundException;
@@ -26,6 +28,43 @@ public class FieldController {
     public FieldService fieldService;
 
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> saveField(
+            @RequestPart("fieldName") String fieldName,
+            @RequestPart("fieldLocation") String fieldLocation,
+            @RequestPart("extentSize") String extentSize,
+            @RequestPart("fieldImage1") MultipartFile profilePic1,
+            @RequestPart("fieldImage2") MultipartFile profilePic2){
+
+        // profilePic ----> Base64
+        String base64ProPic = "";
+        String base64ProPic2 = "";
+
+        try {
+            byte [] bytesProPic = profilePic1.getBytes(); //Converting profile pic to byte array
+            byte [] bytesProPic2 = profilePic2.getBytes(); //Converting profile pic to byte array
+            base64ProPic = AppUtil.profilePicToBase64(bytesProPic);
+            base64ProPic2 = AppUtil.profilePicToBase64(bytesProPic2);
+            String code = AppUtil.generateFieldCode(); //Generating UUID
+
+            var buildUserDTO = new FieldDTO(); //Creating obj
+            buildUserDTO.setFieldCode(code);
+            buildUserDTO.setFieldName(fieldName);
+            buildUserDTO.setFieldLocation(fieldLocation);
+            buildUserDTO.setExtentSize(Double.valueOf(extentSize));
+            buildUserDTO.setFieldImage1(base64ProPic);
+            buildUserDTO.setFieldImage2(base64ProPic2);
+
+            fieldService.saveField(buildUserDTO);
+            return new ResponseEntity<>(HttpStatus.CREATED);
+        }catch (DataPersistException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+*/
+/*    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveField(
             @RequestPart("fieldName") String fieldName,
             @RequestPart("fieldLocation") String fieldLocation,
@@ -59,7 +98,8 @@ public class FieldController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*//*
+
 
     @GetMapping(value = "/{fieldCode}", produces = MediaType.APPLICATION_JSON_VALUE)
     public FieldStatus getSelectedField(@PathVariable ("fieldCode") String fieldCode){
@@ -139,3 +179,4 @@ public class FieldController {
         fieldService.updateField(fieldCode,buildFieldDTO);
     }
 }
+*/

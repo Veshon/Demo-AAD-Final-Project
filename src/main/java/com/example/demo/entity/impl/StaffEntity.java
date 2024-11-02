@@ -9,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.Date;
 import java.util.List;
 
 @AllArgsConstructor
@@ -19,7 +18,6 @@ import java.util.List;
 @Table(name = "Staff")
 
 public class StaffEntity implements SuperEntity {
-
     @Id
     private String id;
     private String firstName;
@@ -44,10 +42,17 @@ public class StaffEntity implements SuperEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @ManyToMany(mappedBy = "staff")
-    private List<FieldEntity> fields;
+    @ManyToOne
+    @JoinColumn(name = "fieldCode", nullable = false)
+    private FieldEntity fieldId;
 
-    @ManyToMany
-    private List<VehicleEntity> vehicles;
+    @ManyToOne
+    @JoinColumn(name = "vehicleCode", nullable = false)
+    private VehicleEntity vehicleId;
 
+    @OneToMany(mappedBy = "staffId")
+    private List<LogsEntity> staffId;
+
+    @OneToMany(mappedBy = "staffId")
+    private List<EquipmentEntity> staffIds;
 }

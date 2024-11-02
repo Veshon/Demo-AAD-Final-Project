@@ -3,7 +3,7 @@ package com.example.demo.controller;
 import com.example.demo.customStatusCode.SelectedErrorStatus;
 import com.example.demo.dto.CropStatus;
 import com.example.demo.dto.impl.CropDTO;
-import com.example.demo.dto.impl.FieldDTO;
+import com.example.demo.dto.impl.FieldsDTO;
 import com.example.demo.exception.DataPersistException;
 import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.CropService;

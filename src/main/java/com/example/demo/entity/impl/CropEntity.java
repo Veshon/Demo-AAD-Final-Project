@@ -6,6 +6,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -13,7 +15,6 @@ import lombok.NoArgsConstructor;
 @Table(name = "Crop")
 
 public class CropEntity implements SuperEntity {
-
     @Id
     private String code;
     private String commonName;
@@ -22,8 +23,12 @@ public class CropEntity implements SuperEntity {
     private String cropImg;
     private String category;
     private String season;
+
     @ManyToOne
-    @JoinColumn(name = "fieldCode", nullable = false)
+    @JoinColumn(name = "fieldCode",  nullable = false)
     private FieldEntity field;
+
+    @OneToMany(mappedBy = "cropCode")
+    private List<LogsEntity> cropCode;
 
 }

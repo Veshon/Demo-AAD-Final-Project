@@ -1,7 +1,8 @@
 package com.example.demo.util;
 
 import com.example.demo.dto.impl.CropDTO;
-import com.example.demo.dto.impl.FieldDTO;
+import com.example.demo.dto.impl.FieldsDTO;
+import com.example.demo.dto.impl.FieldsDTO;
 import com.example.demo.dto.impl.StaffDTO;
 import com.example.demo.entity.impl.CropEntity;
 import com.example.demo.entity.impl.FieldEntity;
@@ -20,17 +21,17 @@ public class Mapping {
     private ModelMapper modelMapper;
 
     //Converting DTO to Entity
-    public FieldEntity toFieldEntity(FieldDTO fieldDTO){
+    public FieldEntity toFieldEntity(FieldsDTO fieldDTO){
         return modelMapper.map(fieldDTO, FieldEntity.class);
     }
 
     //Converting Entity to DTO
-    public FieldDTO toFieldDTO(FieldEntity fieldEntity){
-        return modelMapper.map(fieldEntity, FieldDTO.class);
+    public FieldsDTO toFieldDTO(FieldEntity fieldEntity){
+        return modelMapper.map(fieldEntity, FieldsDTO.class);
     }
 
-    public List<FieldDTO> asFieldDTOList(List<FieldEntity> fieldEntities) {
-        return modelMapper.map(fieldEntities, new TypeToken<List<FieldDTO>>() {}.getType());
+    public List<FieldsDTO> asFieldDTOList(List<FieldEntity> fieldEntities) {
+        return modelMapper.map(fieldEntities, new TypeToken<List<FieldsDTO>>() {}.getType());
     }
 
     public CropDTO toCropDTO(CropEntity cropEntity) {
