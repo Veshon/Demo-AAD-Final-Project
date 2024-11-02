@@ -87,7 +87,6 @@ public class StaffServiceIMPL implements StaffService {
             tmpStaff.get().setContactNo(staffDTO.getContactNo());
             tmpStaff.get().setEmail(staffDTO.getEmail());
             tmpStaff.get().setRole(staffDTO.getRole());
-            tmpStaff.get().setRole(staffDTO.getRole());
         }
     }
 }

@@ -50,7 +50,4 @@ public class StaffEntity implements SuperEntity {
     @ManyToMany
     private List<VehicleEntity> vehicles;
 
-    @OneToMany(mappedBy = "assignedStaff")
-    private List<EquipmentEntity> equipment;
-
 }

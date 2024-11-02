@@ -33,6 +33,5 @@ public class StaffDTO implements StaffStatus {
     private Role role;
     private String fieldCode;
     private String vehicleCode;
-    private String equipmentId;
 
 }

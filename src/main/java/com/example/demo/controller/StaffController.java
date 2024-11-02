@@ -105,43 +105,4 @@ public class StaffController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
-//    @ResponseStatus(HttpStatus.NO_CONTENT)
-//    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-//    public void updateId(
-//            @RequestPart("firstName") String firstName,
-//            @RequestPart("lastName") String lastName,
-//            @RequestPart("designation") String designation,
-//            @RequestPart("gender") String gender,
-//            @RequestPart("joinedDate") String joinedDate,
-//            @RequestPart("dob") String dob,
-//            @RequestPart("addressLine01") String addressLine01,
-//            @RequestPart("addressLine02") String addressLine02,
-//            @RequestPart("addressLine03") String addressLine03,
-//            @RequestPart("addressLine04") String addressLine04,
-//            @RequestPart("addressLine05") String addressLine05,
-//            @RequestPart("contactNo") String contactNocontactNo,
-//            @RequestPart("email") String email,
-//            @PathVariable ("id") String id
-//    ){
-//        // profilePic ----> Base64
-//        String base64ProPic = "";
-//
-//        try {
-//            byte [] bytesProPic = cropImg.getBytes();
-//            base64ProPic = AppUtil.profilePicToBase64(bytesProPic);
-//        }catch (Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        //Build the Object
-//        CropDTO buildCropDTO = new CropDTO();
-//        buildCropDTO.setCode(code);
-//        buildCropDTO.setCommonName(commonName);
-//        buildCropDTO.setScientificName(scientificName);
-//        buildCropDTO.setCategory(category);
-//        buildCropDTO.setSeason(season);
-//        buildCropDTO.setCropImg(base64ProPic);
-//        cropService.updateCrop(code,buildCropDTO);
-//    }
 }
