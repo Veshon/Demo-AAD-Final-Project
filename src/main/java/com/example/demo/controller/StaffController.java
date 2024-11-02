@@ -6,6 +6,7 @@ import com.example.demo.dto.StaffStatus;
 import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.StaffDTO;
 import com.example.demo.exception.DataPersistException;
+import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.FieldService;
 import com.example.demo.service.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,5 +55,31 @@ public class StaffController {
             return (StaffStatus) new SelectedErrorStatus(1,"Staff ID is not valid");
         }
         return staffService.getStaff(id);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public ResponseEntity<Void> deleteId(@PathVariable("id") String id){
+
+        String regexForUserId = "^STAFF-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserId);
+        var regexMatcher = regexPattern.matcher(id);
+
+        try {
+
+            if (!regexMatcher.matches()){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            staffService.deleteStaff(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 }
