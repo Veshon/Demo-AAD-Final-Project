@@ -25,7 +25,7 @@ public class CropController {
     @Autowired
     private CropService cropService;
 
-    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
+/*    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveNote(@RequestBody CropDTO noteDTO) {
         try {
@@ -38,21 +38,22 @@ public class CropController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }
+    }*/
 
-/*    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveCrop(
             @RequestPart("commonName") String commonName,
             @RequestPart("scientificName") String scientificName,
             @RequestPart("category") String category,
             @RequestPart("season") String season,
-            @RequestPart("cropImg") MultipartFile cropImg){
+            @RequestPart("fieldCode") String fieldCode,
+            @RequestPart("cropImg") MultipartFile profilePic){
 
         // profilePic ----> Base64
         String base64ProPic = "";
 
         try {
-            byte [] bytesProPic = cropImg.getBytes(); //Converting profile pic to byte array
+            byte [] bytesProPic = profilePic.getBytes(); //Converting profile pic to byte array
             base64ProPic = AppUtil.profilePicToBase64(bytesProPic);
             String code = AppUtil.generateCropCode(); //Generating UUID
 
@@ -62,6 +63,7 @@ public class CropController {
             buildUserDTO.setScientificName(scientificName);
             buildUserDTO.setCategory(category);
             buildUserDTO.setSeason(season);
+            buildUserDTO.setFieldCode(fieldCode);
             buildUserDTO.setCropImg(base64ProPic);
 
             cropService.saveCrop(buildUserDTO);
@@ -71,7 +73,7 @@ public class CropController {
         }catch (Exception e){
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
-    }*/
+    }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getAllCrops(){
