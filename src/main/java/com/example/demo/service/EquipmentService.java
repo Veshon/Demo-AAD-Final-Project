@@ -11,4 +11,6 @@ public interface EquipmentService {
     void saveEquipment(EquipmentDTO equipmentDTO);
     List<EquipmentDTO> getAllEquipments();
     EquipmentStatus getEquipment(String id);
+    void deleteEquipment(String id);
+
 }

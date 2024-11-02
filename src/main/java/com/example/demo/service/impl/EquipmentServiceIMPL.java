@@ -9,6 +9,7 @@ import com.example.demo.dto.impl.EquipmentDTO;
 import com.example.demo.entity.impl.CropEntity;
 import com.example.demo.entity.impl.EquipmentEntity;
 import com.example.demo.exception.DataPersistException;
+import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.EquipmentService;
 import com.example.demo.util.AppUtil;
 import com.example.demo.util.Mapping;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -53,5 +55,16 @@ public class EquipmentServiceIMPL implements EquipmentService {
             return mapping.toEquipmentDTO(selectedEquipment);
         }
         return (EquipmentStatus) new SelectedErrorStatus(2, "Equipment with id " + id + " not found");
+    }
+
+    @Override
+    public void deleteEquipment(String id) {
+        Optional<EquipmentEntity> existedEquipment = equipmentDAO.findById(id);
+
+        if (!existedEquipment.isPresent()){
+            throw new FieldNotFoundException("Equipment id" + id + "Not found");
+        }else {
+            equipmentDAO.deleteById(id);
+        }
     }
 }
