@@ -14,6 +14,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 
@@ -35,5 +37,11 @@ public class StaffServiceIMPL implements StaffService {
         if (savedStaff == null) {
             throw new DataPersistException("Staff not saved");
         }
+    }
+
+    @Override
+    public List<StaffDTO> getAllStaff() {
+        List<StaffEntity> allStaff = staffDAO.findAll();
+        return mapping.asStaffDTOList(allStaff);
     }
 }
