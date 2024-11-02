@@ -9,6 +9,7 @@ import com.example.demo.entity.impl.CropEntity;
 import com.example.demo.entity.impl.FieldEntity;
 import com.example.demo.entity.impl.VehicleEntity;
 import com.example.demo.exception.DataPersistException;
+import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.VehicleService;
 import com.example.demo.util.AppUtil;
 import com.example.demo.util.Mapping;
@@ -17,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -54,5 +56,16 @@ public class VehicleServiceIMPL implements VehicleService {
             return mapping.toVehicleDTO(selectedVehicle);
         }
         return (VehicleStatus) new SelectedErrorStatus(2, "Vehicle with code " + code + " not found");
+    }
+
+    @Override
+    public void deleteVehicle(String code) {
+        Optional<VehicleEntity> existedVehicle = vehicleDAO.findById(code);
+
+        if (!existedVehicle.isPresent()){
+            throw new FieldNotFoundException("Vehicle code" + code + "Not found");
+        }else {
+            vehicleDAO.deleteById(code);
+        }
     }
 }

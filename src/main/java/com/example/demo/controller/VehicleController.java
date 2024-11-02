@@ -7,6 +7,7 @@ import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.StaffDTO;
 import com.example.demo.dto.impl.VehicleDTO;
 import com.example.demo.exception.DataPersistException;
+import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.VehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -54,5 +55,31 @@ public class VehicleController {
             return (VehicleStatus) new SelectedErrorStatus(1,"Vehicle code is not valid");
         }
         return vehicleService.getVehicle(code);
+    }
+
+    @DeleteMapping(value = "/{vehicleCode}")
+    public ResponseEntity<Void> deleteVehicle(@PathVariable("vehicleCode") String code){
+
+        String regexForVehicleCode = "^VEHICLE-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForVehicleCode);
+        var regexMatcher = regexPattern.matcher(code);
+
+        try {
+
+            if (!regexMatcher.matches()){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            vehicleService.deleteVehicle(code);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 }
