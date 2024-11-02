@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.customStatusCode.SelectedErrorStatus;
 import com.example.demo.dao.StaffDAO;
 import com.example.demo.dao.VehicleDAO;
+import com.example.demo.dto.VehicleStatus;
 import com.example.demo.dto.impl.VehicleDTO;
 import com.example.demo.entity.impl.CropEntity;
 import com.example.demo.entity.impl.FieldEntity;
@@ -43,5 +45,14 @@ public class VehicleServiceIMPL implements VehicleService {
     public List<VehicleDTO> getAllVehicles() {
         List<VehicleEntity> allVehicles = vehicleDAO.findAll();
         return mapping.asVehicleDTOList(allVehicles);
+    }
+
+    @Override
+    public VehicleStatus getVehicle(String code) {
+        if (vehicleDAO.existsById(code)){
+            VehicleEntity selectedVehicle = vehicleDAO.getReferenceById(code);
+            return mapping.toVehicleDTO(selectedVehicle);
+        }
+        return (VehicleStatus) new SelectedErrorStatus(2, "Vehicle with code " + code + " not found");
     }
 }
