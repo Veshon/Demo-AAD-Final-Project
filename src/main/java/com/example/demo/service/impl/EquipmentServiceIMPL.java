@@ -14,6 +14,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 
@@ -34,5 +36,11 @@ public class EquipmentServiceIMPL implements EquipmentService {
         if (savedEquipment == null) {
             throw new DataPersistException("Equipment not saved");
         }
+    }
+
+    @Override
+    public List<EquipmentDTO> getAllEquipments() {
+        List<EquipmentEntity> allEquipments = equipmentDAO.findAll();
+        return mapping.asEquipmentDTOList(allEquipments);
     }
 }
