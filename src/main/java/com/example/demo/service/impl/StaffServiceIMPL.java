@@ -1,0 +1,39 @@
+package com.example.demo.service.impl;
+
+import com.example.demo.dao.FieldDAO;
+import com.example.demo.dao.StaffDAO;
+import com.example.demo.dto.impl.CropDTO;
+import com.example.demo.dto.impl.StaffDTO;
+import com.example.demo.entity.impl.CropEntity;
+import com.example.demo.entity.impl.StaffEntity;
+import com.example.demo.exception.DataPersistException;
+import com.example.demo.service.StaffService;
+import com.example.demo.util.AppUtil;
+import com.example.demo.util.Mapping;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+@Transactional
+
+public class StaffServiceIMPL implements StaffService {
+
+    @Autowired
+    public StaffDAO staffDAO;
+
+    @Autowired
+    public Mapping mapping;
+
+
+    @Override
+    public void saveStaff(StaffDTO staffDTO) {
+        staffDTO.setId(AppUtil.generateStaffId());
+
+        StaffEntity savedStaff =
+                staffDAO.save(mapping.toStaffEntity(staffDTO));
+        if (savedStaff == null) {
+            throw new DataPersistException("Staff not saved");
+        }
+    }
+}
