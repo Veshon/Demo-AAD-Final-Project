@@ -67,4 +67,14 @@ public class EquipmentServiceIMPL implements EquipmentService {
             equipmentDAO.deleteById(id);
         }
     }
+
+    @Override
+    public void updateEquipment(String id, EquipmentDTO equipmentDTO) {
+        Optional<EquipmentEntity> tmpEquipment = equipmentDAO.findById(id); // optional cuz to reduce null point exception
+        if (tmpEquipment.isPresent()){
+            tmpEquipment.get().setName(equipmentDTO.getName());
+            tmpEquipment.get().setType(equipmentDTO.getType());
+            tmpEquipment.get().setStatus(equipmentDTO.getStatus());
+        }
+    }
 }
