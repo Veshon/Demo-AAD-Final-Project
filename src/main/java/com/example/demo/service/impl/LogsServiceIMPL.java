@@ -8,6 +8,7 @@ import com.example.demo.dto.impl.LogsDTO;
 import com.example.demo.entity.impl.CropEntity;
 import com.example.demo.entity.impl.LogsEntity;
 import com.example.demo.exception.DataPersistException;
+import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.LogsService;
 import com.example.demo.util.Mapping;
 import jakarta.transaction.Transactional;
@@ -15,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -49,5 +51,16 @@ public class LogsServiceIMPL implements LogsService {
             return mapping.toLogsDTO(selectedLog);
         }
         return (LogsStatus) new SelectedErrorStatus(2, "Log with code " + code + " not found");
+    }
+
+    @Override
+    public void deleteLog(String code) {
+        Optional<LogsEntity> existedLog = logsDAO.findById(code);
+
+        if (!existedLog.isPresent()){
+            throw new FieldNotFoundException("Log code" + code + "Not found");
+        }else {
+            logsDAO.deleteById(code);
+        }
     }
 }

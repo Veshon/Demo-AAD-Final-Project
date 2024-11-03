@@ -6,6 +6,7 @@ import com.example.demo.dto.LogsStatus;
 import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.LogsDTO;
 import com.example.demo.exception.DataPersistException;
+import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.CropService;
 import com.example.demo.service.LogsService;
 import com.example.demo.util.AppUtil;
@@ -77,4 +78,31 @@ public class LogsController {
         }
         return logsService.getLog(code);
     }
+
+    @DeleteMapping(value = "/{logCode}")
+    public ResponseEntity<Void> deleteCode(@PathVariable("logCode") String code){
+
+        String regexForLogCode = "^LOG-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForLogCode);
+        var regexMatcher = regexPattern.matcher(code);
+
+        try {
+
+            if (!regexMatcher.matches()){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            logsService.deleteLog(code);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
+    }
+
 }

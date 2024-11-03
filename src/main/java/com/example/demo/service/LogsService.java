@@ -12,5 +12,6 @@ public interface LogsService {
     void saveLog(LogsDTO logsDTO);
     List<LogsDTO> getAllLogs();
     LogsStatus getLog(String code);
+    void deleteLog(String code);
 
 }
