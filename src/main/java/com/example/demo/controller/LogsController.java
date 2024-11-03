@@ -1,5 +1,8 @@
 package com.example.demo.controller;
 
+import com.example.demo.customStatusCode.SelectedErrorStatus;
+import com.example.demo.dto.CropStatus;
+import com.example.demo.dto.LogsStatus;
 import com.example.demo.dto.impl.CropDTO;
 import com.example.demo.dto.impl.LogsDTO;
 import com.example.demo.exception.DataPersistException;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/logs")
@@ -61,5 +65,16 @@ public class LogsController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LogsDTO> getAllLogs(){
         return logsService.getAllLogs();
+    }
+
+    @GetMapping(value = "/{logCode}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public LogsStatus getSelectedLog(@PathVariable ("logCode") String code){
+        String regexForLogCode = "^LOG-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForLogCode);
+        var regexMatcher = regexPattern.matcher(code);
+        if (!regexMatcher.matches()) {
+            return (LogsStatus) new SelectedErrorStatus(1,"Log ID is not ");
+        }
+        return logsService.getLog(code);
     }
 }

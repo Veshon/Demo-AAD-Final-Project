@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.customStatusCode.SelectedErrorStatus;
 import com.example.demo.dao.CropDAO;
 import com.example.demo.dao.LogsDAO;
+import com.example.demo.dto.LogsStatus;
 import com.example.demo.dto.impl.LogsDTO;
 import com.example.demo.entity.impl.CropEntity;
 import com.example.demo.entity.impl.LogsEntity;
@@ -38,5 +40,14 @@ public class LogsServiceIMPL implements LogsService {
     public List<LogsDTO> getAllLogs() {
         List<LogsEntity> allLogs = logsDAO.findAll();
         return mapping.asLogsDTOList(allLogs);
+    }
+
+    @Override
+    public LogsStatus getLog(String code) {
+        if (logsDAO.existsById(code)){
+            LogsEntity selectedLog = logsDAO.getReferenceById(code);
+            return mapping.toLogsDTO(selectedLog);
+        }
+        return (LogsStatus) new SelectedErrorStatus(2, "Log with code " + code + " not found");
     }
 }
