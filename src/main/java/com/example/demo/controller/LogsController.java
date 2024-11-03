@@ -110,6 +110,9 @@ public class LogsController {
     public void updateLog(
             @RequestPart("logDate") String logDate,
             @RequestPart("logDetails") String logDetails,
+            @RequestPart("fieldCode") String fieldCode,
+            @RequestPart("cropCode") String cropCode,
+            @RequestPart("logDetails") String staffId,
             @RequestPart("observedImage") MultipartFile observedImage,
             @PathVariable ("logCode") String logCode
     ){
@@ -129,6 +132,9 @@ public class LogsController {
         buildLogDTO.setLogDate(logDate);
         buildLogDTO.setLogDetails(logDetails);
         buildLogDTO.setObservedImage(base64ProPic);
+//        buildLogDTO.setFieldCode(fieldCode);
+//        buildLogDTO.setCropCode(cropCode);
+//        buildLogDTO.setStaffId(staffId);
         logsService.updateLog(logCode,buildLogDTO);
     }
 
