@@ -63,4 +63,14 @@ public class LogsServiceIMPL implements LogsService {
             logsDAO.deleteById(code);
         }
     }
+
+    @Override
+    public void updateLog(String code, LogsDTO logsDTO) {
+        Optional<LogsEntity> tmpLog = logsDAO.findById(code); // optional cuz to reduce null point exception
+        if (tmpLog.isPresent()){
+            tmpLog.get().setLogDate(logsDTO.getLogDate());
+            tmpLog.get().setLogDetails(logsDTO.getLogDetails());
+            tmpLog.get().setObservedImage(logsDTO.getObservedImage());
+        }
+    }
 }

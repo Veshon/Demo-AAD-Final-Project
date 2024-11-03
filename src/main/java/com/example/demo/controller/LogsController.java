@@ -105,4 +105,31 @@ public class LogsController {
         }
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PutMapping(value = "/{logCode}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public void updateLog(
+            @RequestPart("logDate") String logDate,
+            @RequestPart("logDetails") String logDetails,
+            @RequestPart("observedImage") MultipartFile observedImage,
+            @PathVariable ("logCode") String logCode
+    ){
+        // profilePic ----> Base64
+        String base64ProPic = "";
+
+        try {
+            byte [] bytesProPic = observedImage.getBytes();
+            base64ProPic = AppUtil.profilePicToBase64(bytesProPic);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        //Build the Object
+        LogsDTO buildLogDTO = new LogsDTO();
+        buildLogDTO.setLogCode(logCode);
+        buildLogDTO.setLogDate(logDate);
+        buildLogDTO.setLogDetails(logDetails);
+        buildLogDTO.setObservedImage(base64ProPic);
+        logsService.updateLog(logCode,buildLogDTO);
+    }
+
 }

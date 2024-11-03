@@ -13,5 +13,6 @@ public interface LogsService {
     List<LogsDTO> getAllLogs();
     LogsStatus getLog(String code);
     void deleteLog(String code);
+    void updateLog(String code, LogsDTO logsDTO);
 
 }
