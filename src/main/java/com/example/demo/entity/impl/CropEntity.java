@@ -28,7 +28,8 @@ public class CropEntity implements SuperEntity {
     @JoinColumn(name = "fieldCode",  nullable = false)
     private FieldEntity field;
 
-    @OneToMany(mappedBy = "cropCode")
-    private List<LogsEntity> cropCode;
+    @OneToMany(mappedBy = "crop")
+    private List<LogsEntity> crops;
+
 
 }

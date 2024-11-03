@@ -47,7 +47,7 @@ public class StaffEntity implements SuperEntity {
     @JoinColumn(name = "vehicleCode", nullable = false)
     private VehicleEntity vehicle;
 
-    @OneToMany(mappedBy = "staffId")
+    @OneToMany(mappedBy = "staff")
     private List<LogsEntity> staffId;
 
     @OneToMany(mappedBy = "staff")

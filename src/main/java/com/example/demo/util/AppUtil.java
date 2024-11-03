@@ -25,6 +25,10 @@ public class AppUtil {
         return "EQUIPMENT-" + UUID.randomUUID();
     }
 
+    public static String generateLogCode(){
+        return "LOG-" + UUID.randomUUID();
+    }
+
     public static String profilePicToBase64(byte[] profilePic){
         return Base64.getEncoder().encodeToString(profilePic);
     }

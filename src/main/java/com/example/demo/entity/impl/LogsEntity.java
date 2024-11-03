@@ -24,13 +24,13 @@ public class LogsEntity implements SuperEntity {
 
     @ManyToOne
     @JoinColumn(name = "fieldCode", nullable = false)
-    private FieldEntity fieldId;
+    private FieldEntity field;
 
     @ManyToOne
     @JoinColumn(name = "cropCode", nullable = false)
-    private CropEntity cropCode;
+    private CropEntity crop;
 
     @ManyToOne
     @JoinColumn(name = "staffId", nullable = false)
-    private StaffEntity staffId;
+    private StaffEntity staff;
 }

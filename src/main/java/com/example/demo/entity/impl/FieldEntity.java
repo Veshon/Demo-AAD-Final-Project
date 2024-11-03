@@ -34,6 +34,6 @@ public class FieldEntity implements SuperEntity {
     @OneToMany(mappedBy = "field")
     private List<EquipmentEntity> fieldId;
 
-    @OneToMany(mappedBy = "fieldId")
+    @OneToMany(mappedBy = "field")
     private List<LogsEntity> fieldCodes;
 }
