@@ -12,6 +12,8 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @Transactional
 
@@ -30,5 +32,11 @@ public class LogsServiceIMPL implements LogsService {
         if (savedLog == null) {
             throw new DataPersistException("Log not saved");
         }
+    }
+
+    @Override
+    public List<LogsDTO> getAllLogs() {
+        List<LogsEntity> allLogs = logsDAO.findAll();
+        return mapping.asLogsDTOList(allLogs);
     }
 }
