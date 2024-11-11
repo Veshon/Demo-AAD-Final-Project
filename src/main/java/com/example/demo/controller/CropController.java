@@ -59,7 +59,7 @@ public class CropController {
 
             cropService.saveCrop(buildUserDTO);
 
-            logger.info("Data saved.");
+            logger.info("Crop data saved.");
 
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
@@ -73,6 +73,7 @@ public class CropController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getAllCrops(){
+        logger.info("Crop data GET method executed.");
         return cropService.getAllCrops();
     }
 
@@ -101,6 +102,7 @@ public class CropController {
             }
 
             cropService.deleteCrop(code);
+            logger.info("Crop deleted.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         }catch (FieldNotFoundException e){
