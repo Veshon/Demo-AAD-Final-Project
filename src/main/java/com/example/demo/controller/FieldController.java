@@ -25,7 +25,7 @@ import java.util.regex.Pattern;
 @RequestMapping("api/v1/fields")
 
 public class FieldController {
-    static Logger logger = LoggerFactory.getLogger(CropController.class);
+    static Logger logger = LoggerFactory.getLogger(FieldController.class);
 
     @Autowired
     private FieldService fieldService;

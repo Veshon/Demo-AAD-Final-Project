@@ -26,7 +26,7 @@ import java.util.regex.Pattern;
 @RequestMapping("api/v1/equipments")
 
 public class EquipmentController {
-    static Logger logger = LoggerFactory.getLogger(CropController.class);
+    static Logger logger = LoggerFactory.getLogger(EquipmentController.class);
 
     @Autowired
     public EquipmentService equipmentService;

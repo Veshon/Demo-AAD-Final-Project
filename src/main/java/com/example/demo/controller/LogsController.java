@@ -10,6 +10,8 @@ import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.CropService;
 import com.example.demo.service.LogsService;
 import com.example.demo.util.AppUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +26,7 @@ import java.util.regex.Pattern;
 @RequestMapping("api/v1/logs")
 
 public class LogsController {
+    static Logger logger = LoggerFactory.getLogger(LogsController.class);
 
     @Autowired
     private LogsService logsService;
@@ -55,16 +58,20 @@ public class LogsController {
             buildLogDTO.setObservedImage(base64ProPic);
 
             logsService.saveLog(buildLogDTO);
+            logger.info("Logs POST method executed.");
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
+            logger.info("Logs POST method not executed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            logger.info("Logs POST method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<LogsDTO> getAllLogs(){
+        logger.info("Logs GET_ALL method executed.");
         return logsService.getAllLogs();
     }
 
@@ -74,8 +81,10 @@ public class LogsController {
         Pattern regexPattern = Pattern.compile(regexForLogCode);
         var regexMatcher = regexPattern.matcher(code);
         if (!regexMatcher.matches()) {
+            logger.info("Logs GET method not executed.");
             return (LogsStatus) new SelectedErrorStatus(1,"Log ID is not ");
         }
+        logger.info("Logs GET method executed.");
         return logsService.getLog(code);
     }
 
@@ -89,17 +98,21 @@ public class LogsController {
         try {
 
             if (!regexMatcher.matches()){
+                logger.info("Logs DELETE method not executed.");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             logsService.deleteLog(code);
+            logger.info("Logs DELETE method executed.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         }catch (FieldNotFoundException e){
             e.printStackTrace();
+            logger.info("Logs DELETE method not executed.");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
             e.printStackTrace();
+            logger.info("Logs DELETE method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
@@ -136,6 +149,7 @@ public class LogsController {
 //        buildLogDTO.setCropCode(cropCode);
 //        buildLogDTO.setStaffId(staffId);
         logsService.updateLog(logCode,buildLogDTO);
+        logger.info("Logs UPDATE method not executed.");
     }
 
 }
