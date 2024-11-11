@@ -51,6 +51,7 @@ public class EquipmentController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<EquipmentDTO> getAllEquipments(){
+        logger.info("Equipment GET_ALL method executed.");
         return equipmentService.getAllEquipments();
     }
 
@@ -60,8 +61,10 @@ public class EquipmentController {
         Pattern regexPattern = Pattern.compile(regexEquipmentID);
         var regexMatcher = regexPattern.matcher(code);
         if (!regexMatcher.matches()) {
+            logger.info("Equipment GET method not executed.");
             return (EquipmentStatus) new SelectedErrorStatus(1,"Equipment ID is not valid");
         }
+        logger.info("Equipment GET method executed.");
         return equipmentService.getEquipment(code);
     }
 
