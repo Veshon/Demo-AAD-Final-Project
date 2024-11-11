@@ -103,7 +103,7 @@ public class VehicleController {
         var regexMatcher = regexPattern.matcher(code);
         try {
             if(!regexMatcher.matches() || updatedVehicleDTO == null){
-                logger.info("Vehicle UPDATE method not executed.");
+                logger.info("Vehicle UPDATE method not executed, BAD_REQUEST");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             vehicleService.updateVehicle(code,updatedVehicleDTO);
@@ -111,11 +111,11 @@ public class VehicleController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (FieldNotFoundException e){
             e.printStackTrace();
-            logger.info("Vehicle UPDATE method not executed.");
+            logger.info("Vehicle UPDATE method not executed, BAD_REQUEST");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             e.printStackTrace();
-            logger.info("Vehicle UPDATE method not executed.");
+            logger.info("Vehicle UPDATE method not executed, Server error");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
