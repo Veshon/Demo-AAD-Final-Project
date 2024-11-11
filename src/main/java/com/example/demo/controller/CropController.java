@@ -73,7 +73,7 @@ public class CropController {
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<CropDTO> getAllCrops(){
-        logger.info("Crop data GET method executed.");
+        logger.info("Crop data GET_ALL method executed.");
         return cropService.getAllCrops();
     }
 
@@ -83,8 +83,10 @@ public class CropController {
         Pattern regexPattern = Pattern.compile(regexForUserID);
         var regexMatcher = regexPattern.matcher(code);
         if (!regexMatcher.matches()) {
-            return new SelectedErrorStatus(1,"Crop ID is not ");
+            logger.info("Crop ID not found.");
+            return new SelectedErrorStatus(1,"Crop ID is not found");
         }
+        logger.info("Crop data GET method executed.");
         return cropService.getCrop(code);
     }
 
