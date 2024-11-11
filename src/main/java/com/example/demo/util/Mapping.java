@@ -89,4 +89,18 @@ public class Mapping {
     public List<LogsDTO> asLogsDTOList(List<LogsEntity> logsEntities) {
         return modelMapper.map(logsEntities, new TypeToken<List<LogsDTO>>() {}.getType());
     }
+
+    //Converting DTO to Entity
+    public UserEntity toUserEntity(UserDTO userDTO){
+        return modelMapper.map(userDTO, UserEntity.class);
+    }
+
+    //Converting Entity to DTO
+    public UserDTO toUserDTO(UserEntity userEntity){
+        return modelMapper.map(userEntity, UserDTO.class);
+    }
+
+    public List<UserDTO> asUserDTOList(List<UserEntity> userEntities) {
+        return modelMapper.map(userEntities, new TypeToken<List<UserDTO>>() {}.getType());
+    }
 }
