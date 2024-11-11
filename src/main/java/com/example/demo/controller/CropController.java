@@ -8,6 +8,8 @@ import com.example.demo.exception.DataPersistException;
 import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.CropService;
 import com.example.demo.util.AppUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,6 +24,7 @@ import java.util.regex.Pattern;
 @RequestMapping("api/v1/crops")
 
 public class CropController {
+    static Logger logger = LoggerFactory.getLogger(CropController.class);
 
     @Autowired
     private CropService cropService;
@@ -34,6 +37,8 @@ public class CropController {
             @RequestPart("season") String season,
             @RequestPart("fieldCode") String fieldCode,
             @RequestPart("cropImg") MultipartFile profilePic){
+
+        logger.info("POST method executed.");
 
         // profilePic ----> Base64
         String base64ProPic = "";
@@ -53,10 +58,15 @@ public class CropController {
             buildUserDTO.setCropImg(base64ProPic);
 
             cropService.saveCrop(buildUserDTO);
+
+            logger.info("Data saved.");
+
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
+            logger.info("Data not saved, because of BAD REQUEST.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            logger.info("Data not saved, because of server error.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
