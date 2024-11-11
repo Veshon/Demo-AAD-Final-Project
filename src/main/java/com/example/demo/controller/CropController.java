@@ -146,6 +146,7 @@ public class CropController {
         buildCropDTO.setSeason(season);
         buildCropDTO.setCropImg(base64ProPic);
         cropService.updateCrop(code,buildCropDTO);
+        logger.info("Crop data UPDATE method executed.");
     }
 
 }
