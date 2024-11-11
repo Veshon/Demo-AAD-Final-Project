@@ -78,17 +78,21 @@ public class EquipmentController {
         try {
 
             if (!regexMatcher.matches()){
+                logger.info("Equipment DELETE method not executed.");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             equipmentService.deleteEquipment(code);
+            logger.info("Equipment DELETE method executed.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         }catch (FieldNotFoundException e){
             e.printStackTrace();
+            logger.info("Equipment DELETE method not executed.");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
             e.printStackTrace();
+            logger.info("Equipment DELETE method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
@@ -102,15 +106,19 @@ public class EquipmentController {
         var regexMatcher = regexPattern.matcher(id);
         try {
             if(!regexMatcher.matches() || updatedEquipmentDTO == null){
+                logger.info("Equipment UPDATE method not executed.");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             equipmentService.updateEquipment(id,updatedEquipmentDTO);
+            logger.info("Equipment UPDATE method executed.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (FieldNotFoundException e){
             e.printStackTrace();
+            logger.info("Equipment UPDATE method not executed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             e.printStackTrace();
+            logger.info("Equipment UPDATE method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
