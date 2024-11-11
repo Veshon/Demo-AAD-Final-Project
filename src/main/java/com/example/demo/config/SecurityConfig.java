@@ -35,10 +35,10 @@ public class SecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable)
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS with custom configuration
                 .authorizeHttpRequests(req ->
-                        req.requestMatchers("/api/v1/auth/**")
-                                .permitAll()
-                                .anyRequest()
-                                .authenticated())
+                        req.requestMatchers("/api/v1/auth/**").permitAll()
+                                .requestMatchers("/api/v1/fields/**")
+                                .hasRole("ADMIN")
+                                .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
                 .addFilterBefore(jwtConfigFilter, UsernamePasswordAuthenticationFilter.class);
