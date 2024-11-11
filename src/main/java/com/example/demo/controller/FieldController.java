@@ -9,6 +9,8 @@ import com.example.demo.exception.DataPersistException;
 import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.FieldService;
 import com.example.demo.util.AppUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -23,6 +25,7 @@ import java.util.regex.Pattern;
 @RequestMapping("api/v1/fields")
 
 public class FieldController {
+    static Logger logger = LoggerFactory.getLogger(CropController.class);
 
     @Autowired
     private FieldService fieldService;
@@ -55,10 +58,13 @@ public class FieldController {
             buildFieldDTO.setFieldImage2(base64ProPic2);
 
             fieldService.saveField(buildFieldDTO);
+            logger.info("Field POST method executed.");
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
+            logger.info("Equipment POST method not executed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
+            logger.info("Equipment POST method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -71,13 +77,16 @@ public class FieldController {
         var regexMatcher = regexPattern.matcher(fieldCode);
 
         if (!regexMatcher.matches()){
+            logger.info("Field GET method not executed.");
             return new SelectedFieldErrorStatus(1,"Field code is not valid");
         }
+        logger.info("Field GET method executed.");
         return fieldService.getField(fieldCode);
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FieldDTO> getAllFields(){
+        logger.info("Field GET_ALL method executed.");
         return fieldService.getAllFields();
     }
 
@@ -91,17 +100,21 @@ public class FieldController {
         try {
 
             if (!regexMatcher.matches()){
+                logger.info("Field DELETE method not executed.");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             fieldService.deleteField(fieldCode);
+            logger.info("Field DELETE method executed.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         }catch (FieldNotFoundException e){
             e.printStackTrace();
+            logger.info("Field DELETE method not executed.");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
             e.printStackTrace();
+            logger.info("Field DELETE method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
@@ -139,5 +152,6 @@ public class FieldController {
         buildFieldDTO.setFieldImage1(base64ProPic1);
         buildFieldDTO.setFieldImage2(base64ProPic2);
         fieldService.updateField(fieldCode,buildFieldDTO);
+        logger.info("Field UPDATE method executed.");
     }
 }
