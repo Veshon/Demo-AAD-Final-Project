@@ -10,6 +10,8 @@ import com.example.demo.exception.DataPersistException;
 import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.EquipmentService;
 import com.example.demo.util.AppUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +26,7 @@ import java.util.regex.Pattern;
 @RequestMapping("api/v1/equipments")
 
 public class EquipmentController {
+    static Logger logger = LoggerFactory.getLogger(CropController.class);
 
     @Autowired
     public EquipmentService equipmentService;
@@ -33,12 +36,15 @@ public class EquipmentController {
     public ResponseEntity<Void> saveEquipment(@RequestBody EquipmentDTO equipmentDTO) {
         try {
             equipmentService.saveEquipment(equipmentDTO);
+            logger.info("Equipment POST method executed.");
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
             e.printStackTrace();
+            logger.info("Equipment POST method not executed. BAD_REQUEST");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             e.printStackTrace();
+            logger.info("Equipment POST method not executed. SERVER_ERROR");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
