@@ -10,6 +10,8 @@ import com.example.demo.exception.FieldNotFoundException;
 import com.example.demo.service.FieldService;
 import com.example.demo.service.StaffService;
 import com.example.demo.util.AppUtil;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,6 +26,7 @@ import java.util.regex.Pattern;
 @RequestMapping("api/v1/staff")
 
 public class StaffController {
+    static Logger logger = LoggerFactory.getLogger(StaffController.class);
 
     @Autowired
     private StaffService staffService;
@@ -33,18 +36,22 @@ public class StaffController {
     public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staffDTO) {
         try {
             staffService.saveStaff(staffDTO);
+            logger.info("Staff POST method executed.");
             return new ResponseEntity<>(HttpStatus.CREATED);
         }catch (DataPersistException e){
             e.printStackTrace();
+            logger.info("Staff POST method not executed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             e.printStackTrace();
+            logger.info("Staff POST method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<StaffDTO> getAllStaff(){
+        logger.info("Staff GET_ALL method executed.");
         return staffService.getAllStaff();
     }
 
@@ -54,8 +61,10 @@ public class StaffController {
         Pattern regexPattern = Pattern.compile(regexForUserID);
         var regexMatcher = regexPattern.matcher(id);
         if (!regexMatcher.matches()) {
+            logger.info("Staff GET method not executed.");
             return (StaffStatus) new SelectedErrorStatus(1,"Staff ID is not valid");
         }
+        logger.info("Staff GET method executed.");
         return staffService.getStaff(id);
     }
 
@@ -69,17 +78,21 @@ public class StaffController {
         try {
 
             if (!regexMatcher.matches()){
+                logger.info("Staff DELETE method not executed.");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             staffService.deleteStaff(id);
+            logger.info("Staff DELETE method executed.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
         }catch (FieldNotFoundException e){
             e.printStackTrace();
+            logger.info("Staff DELETE method not executed.");
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }catch (Exception e){
             e.printStackTrace();
+            logger.info("Staff DELETE method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 
         }
@@ -93,15 +106,19 @@ public class StaffController {
         var regexMatcher = regexPattern.matcher(id);
         try {
             if(!regexMatcher.matches() || updatedStaffDTO == null){
+                logger.info("Staff UPDATE method not executed.");
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
             staffService.updateStaff(id,updatedStaffDTO);
+            logger.info("Staff UPDATE method executed.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }catch (FieldNotFoundException e){
             e.printStackTrace();
+            logger.info("Staff UPDATE method not executed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }catch (Exception e){
             e.printStackTrace();
+            logger.info("Staff UPDATE method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
