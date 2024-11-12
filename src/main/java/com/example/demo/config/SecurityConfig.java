@@ -4,6 +4,7 @@ import com.example.demo.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -36,8 +37,10 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS with custom configuration
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers("/api/v1/fields/**")
-                                .hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.POST, "/api/v1/fields/**").hasAuthority("ROLE_ADMIN") // Only admins can perform POST
+//                                .requestMatchers("/api/v1/fields/**")
+//                                .hasRole("ADMIN")
+//                                .requestMatchers(HttpMethod.GET, "/api/v1/fields/**").authenticated() // Allow GET requests to be accessed by authenticated users
                                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
