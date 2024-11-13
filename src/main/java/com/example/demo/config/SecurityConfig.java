@@ -37,10 +37,10 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Enable CORS with custom configuration
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/api/v1/auth/**").permitAll()
-                                .requestMatchers(HttpMethod.POST, "/api/v1/fields/**").hasAuthority("ROLE_MANAGER") // Only managers can perform POST
-                                .requestMatchers(HttpMethod.GET, "/api/v1/fields/**").hasAuthority("ROLE_MANAGER") // Only managers can perform GET
-                                .requestMatchers(HttpMethod.PUT, "/api/v1/fields/**").hasAuthority("ROLE_MANAGER") // Only managers can perform PUT
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/fields/**").hasAuthority("ROLE_MANAGER") // Only managers can perform DELETE
+                                .requestMatchers(HttpMethod.POST, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
+                                .requestMatchers(HttpMethod.GET, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
 
                                 .requestMatchers(HttpMethod.POST, "/api/v1/crops/**").hasAuthority("ROLE_MANAGER") // Only managers can perform POST
                                 .requestMatchers(HttpMethod.GET, "/api/v1/crops/**").hasAuthority("ROLE_MANAGER") // Only managers can perform GET
