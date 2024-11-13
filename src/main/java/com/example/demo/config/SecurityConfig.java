@@ -62,10 +62,10 @@ public class SecurityConfig {
                                 .requestMatchers(HttpMethod.PUT, "/api/v1/staff/**").hasAuthority("ROLE_MANAGER") // Only managers can perform PUT
                                 .requestMatchers(HttpMethod.DELETE, "/api/v1/staff/**").hasAuthority("ROLE_MANAGER") // Only managers can perform DELETE
 
-                                .requestMatchers(HttpMethod.POST, "/api/v1/vehicles/**").hasAuthority("ROLE_MANAGER") // Only managers can perform POST
-                                .requestMatchers(HttpMethod.GET, "/api/v1/vehicles/**").hasAuthority("ROLE_MANAGER") // Only managers can perform GET
-                                .requestMatchers(HttpMethod.PUT, "/api/v1/vehicles/**").hasAuthority("ROLE_MANAGER") // Only managers can perform PUT
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/vehicles/**").hasAuthority("ROLE_MANAGER") // Only managers can perform DELETE
+                                .requestMatchers(HttpMethod.POST, "/api/v1/vehicles/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER") // Only admins and managers can POST
+                                .requestMatchers(HttpMethod.GET, "/api/v1/vehicles/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER") // Only admins and managers can POST
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/vehicles/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER") // Only admins and managers can POST
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/vehicles/**").hasAnyAuthority("ROLE_ADMIN", "ROLE_MANAGER") // Only admins and managers can POST
 
 /*                                .requestMatchers(HttpMethod.POST, "/api/v1/fields/**").hasAuthority("ROLE_ADMIN") // Only admins can perform POST
                                 .requestMatchers("/api/v1/fields/**")
