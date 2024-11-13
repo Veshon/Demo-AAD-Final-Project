@@ -38,10 +38,13 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/fields/**").hasAuthority("ROLE_MANAGER") // Only managers can perform POST
-//                                .requestMatchers(HttpMethod.POST, "/api/v1/fields/**").hasAuthority("ROLE_ADMIN") // Only admins can perform POST
-//                                .requestMatchers("/api/v1/fields/**")
-//                                .hasRole("ADMIN")
-//                                .requestMatchers(HttpMethod.GET, "/api/v1/fields/**").authenticated() // Allow GET requests to be accessed by authenticated users
+                                .requestMatchers(HttpMethod.GET, "/api/v1/fields/**").hasAuthority("ROLE_MANAGER") // Only managers can perform GET
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/fields/**").hasAuthority("ROLE_MANAGER") // Only managers can perform PUT
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/fields/**").hasAuthority("ROLE_MANAGER") // Only managers can perform DELETE
+/*                                .requestMatchers(HttpMethod.POST, "/api/v1/fields/**").hasAuthority("ROLE_ADMIN") // Only admins can perform POST
+                                .requestMatchers("/api/v1/fields/**")
+                                .hasRole("ADMIN")
+                                .requestMatchers(HttpMethod.GET, "/api/v1/fields/**").authenticated() // Allow GET requests to be accessed by authenticated users*/
                                 .anyRequest().authenticated())
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authenticationProvider(authenticationProvider())
