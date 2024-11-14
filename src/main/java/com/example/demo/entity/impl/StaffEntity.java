@@ -33,7 +33,9 @@ public class StaffEntity implements SuperEntity {
     private String addressLine03;
     private String addressLine04;
     private String addressLine05;
+    @Column(unique = true, length = 10)
     private String contactNo;
+    @Column(unique = true)
     private String email;
 
     @Enumerated(EnumType.STRING)
