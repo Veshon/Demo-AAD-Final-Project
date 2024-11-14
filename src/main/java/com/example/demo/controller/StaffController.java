@@ -34,15 +34,25 @@ public class StaffController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> saveStaff(@RequestBody StaffDTO staffDTO) {
+        // Define the regex pattern for email validation
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // Validate email format
+        if (staffDTO.getEmail() == null || !pattern.matcher(staffDTO.getEmail()).matches()) {
+            logger.info("Invalid email format.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         try {
             staffService.saveStaff(staffDTO);
             logger.info("Staff POST method executed.");
             return new ResponseEntity<>(HttpStatus.CREATED);
-        }catch (DataPersistException e){
+        } catch (DataPersistException e) {
             e.printStackTrace();
             logger.info("Staff POST method not executed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             logger.info("Staff POST method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -98,25 +108,33 @@ public class StaffController {
         }
     }
 
-    @PutMapping(value = "/{id}")
-    public ResponseEntity<Void> updateStaff(@PathVariable ("id") String id,
-                                           @RequestBody StaffDTO updatedStaffDTO){
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateStaff(@PathVariable("id") String id, @RequestBody StaffDTO updatedStaffDTO) {
+        // Define the regex pattern for email validation
+        String emailRegex = "^[\\w-\\.]+@([\\w-]+\\.)+[\\w-]{2,4}$";
+        Pattern pattern = Pattern.compile(emailRegex);
+
+        // Validate the staff ID format (existing validation)
         String regexForUserID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
-        Pattern regexPattern = Pattern.compile(regexForUserID);
-        var regexMatcher = regexPattern.matcher(id);
+        Pattern idPattern = Pattern.compile(regexForUserID);
+        var idMatcher = idPattern.matcher(id);
+
+        // Validate the email format in updatedStaffDTO
+        if (!idMatcher.matches() || updatedStaffDTO == null ||
+                updatedStaffDTO.getEmail() == null || !pattern.matcher(updatedStaffDTO.getEmail()).matches()) {
+            logger.info("Invalid email format.");
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+
         try {
-            if(!regexMatcher.matches() || updatedStaffDTO == null){
-                logger.info("Staff UPDATE method not executed.");
-                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-            }
-            staffService.updateStaff(id,updatedStaffDTO);
+            staffService.updateStaff(id, updatedStaffDTO);
             logger.info("Staff UPDATE method executed.");
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }catch (FieldNotFoundException e){
+        } catch (FieldNotFoundException e) {
             e.printStackTrace();
             logger.info("Staff UPDATE method not executed.");
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
             logger.info("Staff UPDATE method not executed.");
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
