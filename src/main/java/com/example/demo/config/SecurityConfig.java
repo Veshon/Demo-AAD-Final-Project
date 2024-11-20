@@ -83,7 +83,7 @@ public class SecurityConfig {
     // CORS configuration bean
     private UrlBasedCorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("http://localhost:63342")); // Add allowed origins
+        config.setAllowedOrigins(List.of("http://localhost:63343")); // Add allowed origins
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allowed methods
         config.setAllowedHeaders(List.of("Authorization", "Content-Type")); // Allowed headers
         config.setAllowCredentials(true);
