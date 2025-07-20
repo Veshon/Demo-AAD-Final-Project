@@ -38,9 +38,9 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers("/api/v1/auth/**").permitAll()
                                 .requestMatchers(HttpMethod.POST, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
-                                .requestMatchers(HttpMethod.GET, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
-                                .requestMatchers(HttpMethod.PUT, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
-                                .requestMatchers(HttpMethod.DELETE, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
+                                .requestMatchers(HttpMethod.GET, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can GET
+                                .requestMatchers(HttpMethod.PUT, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can UPDATE
+                                .requestMatchers(HttpMethod.DELETE, "/api/v1/fields/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can DELETE
 
                                 .requestMatchers(HttpMethod.POST, "/api/v1/crops/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
                                 .requestMatchers(HttpMethod.GET, "/api/v1/crops/**").hasAnyAuthority("ROLE_SCIENTIST", "ROLE_MANAGER") // Only scientists and managers can POST
